@@ -9,12 +9,12 @@ const initialState = {
   message: ''
 }
 
-export const createGoal = createAsyncThunk(
+export const createTimesheet = createAsyncThunk(
   'timesheets/create',
   async (timesheetData, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token
-      return await timesheetService.createGoal(timesheetData, token)
+      return await timesheetService.createTimesheet(timesheetData, token)
     } catch (error) {
       const message = (
         error.response &&
@@ -27,12 +27,12 @@ export const createGoal = createAsyncThunk(
   }
 )
 
-export const deleteGoal = createAsyncThunk(
+export const deleteTimesheet = createAsyncThunk(
   'timesheets/delete',
   async (id, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token
-      return await timesheetService.deleteGoal(id, token)
+      return await timesheetService.deleteTimesheet(id, token)
     } catch (error) {
       const message = (
         error.response &&
@@ -70,15 +70,15 @@ export const timesheetSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(createGoal.pending, (state) => {
+      .addCase(createTimesheet.pending, (state) => {
         state.isLoading = true
       })
-      .addCase(createGoal.fulfilled, (state, action) => {
+      .addCase(createTimesheet.fulfilled, (state, action) => {
         state.timesheets.push(action.payload)
         state.isSuccess = true
         state.isLoading = false
       })
-      .addCase(createGoal.rejected, (state, action) => {
+      .addCase(createTimesheet.rejected, (state, action) => {
         state.isError = true
         state.isLoading = false
         state.message = action.payload
@@ -96,15 +96,15 @@ export const timesheetSlice = createSlice({
         state.isError = true
         state.isLoading = false
       })
-      .addCase(deleteGoal.pending, (state) => {
+      .addCase(deleteTimesheet.pending, (state) => {
         state.isLoading = true
       })
-      .addCase(deleteGoal.fulfilled, (state, action) => {
+      .addCase(deleteTimesheet.fulfilled, (state, action) => {
         state.timesheets = state.timesheets.filter((timesheet) => timesheet._id !== action.payload.id)
         state.isSuccess = true
         state.isLoading = false
       })
-      .addCase(deleteGoal.rejected, (state, action) => {
+      .addCase(deleteTimesheet.rejected, (state, action) => {
         state.message = action.payload
         state.isError = true
         state.isLoading = false

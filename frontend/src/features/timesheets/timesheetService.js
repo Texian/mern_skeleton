@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API_URL = '/api/timesheets/'
 
-const createGoal = async (timesheetData, token) => {
+const createTimesheet = async (timesheetData, token) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`
@@ -24,7 +24,7 @@ const getTimesheets = async (token) => {
   return response.data
 }
 
-const deleteGoal = async (timesheetId, token) => {
+const deleteTimesheet = async (timesheetId, token) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`
@@ -36,9 +36,9 @@ const deleteGoal = async (timesheetId, token) => {
 }
 
 const timesheetService = {
-  createGoal,
+  createTimesheet,
   getTimesheets,
-  deleteGoal
+  deleteTimesheet
 }
 
 export default timesheetService

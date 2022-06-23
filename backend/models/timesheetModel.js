@@ -7,11 +7,11 @@ const timesheetSchema = mongoose.Schema({
     ref: 'User'
   },
   hoursDay: {
-    type: float,
+    type: Number,
     
   },
   hoursWeek: {
-    type: float,
+    type: Number,
   }
 }, {
   timestamps: true

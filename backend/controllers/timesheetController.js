@@ -2,12 +2,12 @@ const asyncHandler = require('express-async-handler');
 const Timesheet = require('../models/timesheetModel');
 const User = require('../models/userModel');
 
-const getSheet = asyncHandler(async (req, res) => {
+const getTimesheets = asyncHandler(async (req, res) => {
   const sheets = await Sheet.find({user: req.user.id});
   res.status(200).json(sheets);
 })
 
-const setSheet = asyncHandler(async (req, res) => {
+const setTimesheet = asyncHandler(async (req, res) => {
   if (!req.body.text) {
     res.status(400)
     throw new Error("Missing text");
@@ -21,7 +21,7 @@ const setSheet = asyncHandler(async (req, res) => {
   res.status(200).json(sheet);
 })
 
-const updateSheet = asyncHandler(async (req, res) => {
+const updateTimesheet = asyncHandler(async (req, res) => {
   const sheet = await Sheet.findById(req.params.id)
 
   if (!sheet) {
@@ -43,9 +43,8 @@ const updateSheet = asyncHandler(async (req, res) => {
   res.status(200).json(updatedSheet);
 })
 
-const deleteSheet = asyncHandler(async (req, res) => {
+const deleteTimesheet = asyncHandler(async (req, res) => {
   
-
   if (!sheet) {
     res.status(404)
     throw new Error("Sheet not found");
@@ -66,8 +65,8 @@ const deleteSheet = asyncHandler(async (req, res) => {
 })
 
   module.exports = {
-    getSheets,
-    setSheet,
-    updateSheet,
-    deleteSheet
+    getTimesheets,
+    setTimesheet,
+    updateTimesheet,
+    deleteTimesheet
   }
