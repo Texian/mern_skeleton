@@ -1,19 +1,19 @@
 import axios from "axios";
 
-const API_URL = '/api/goals/'
+const API_URL = '/api/timesheets/'
 
-const createGoal = async (goalData, token) => {
+const createGoal = async (timesheetData, token) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`
     }
   }
 
-  const response = await axios.post(API_URL, goalData, config)
+  const response = await axios.post(API_URL, timesheetData, config)
   return response.data
 }
 
-const getGoals = async (token) => {
+const getTimesheets = async (token) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`
@@ -24,21 +24,21 @@ const getGoals = async (token) => {
   return response.data
 }
 
-const deleteGoal = async (goalId, token) => {
+const deleteGoal = async (timesheetId, token) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`
     }
   }
 
-  const response = await axios.delete(API_URL + goalId, config)
+  const response = await axios.delete(API_URL + timesheetId, config)
   return response.data
 }
 
-const goalService = {
+const timesheetService = {
   createGoal,
-  getGoals,
+  getTimesheets,
   deleteGoal
 }
 
-export default goalService
+export default timesheetService

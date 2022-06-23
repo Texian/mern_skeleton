@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import goalService from './goalService'
+import timesheetService from './timesheetService'
 
 const initialState = {
-  goals: [],
+  timesheets: [],
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -10,11 +10,11 @@ const initialState = {
 }
 
 export const createGoal = createAsyncThunk(
-  'goals/create',
-  async (goalData, thunkAPI) => {
+  'timesheets/create',
+  async (timesheetData, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token
-      return await goalService.createGoal(goalData, token)
+      return await timesheetService.createGoal(timesheetData, token)
     } catch (error) {
       const message = (
         error.response &&
@@ -28,11 +28,11 @@ export const createGoal = createAsyncThunk(
 )
 
 export const deleteGoal = createAsyncThunk(
-  'goals/delete',
+  'timesheets/delete',
   async (id, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token
-      return await goalService.deleteGoal(id, token)
+      return await timesheetService.deleteGoal(id, token)
     } catch (error) {
       const message = (
         error.response &&
@@ -45,10 +45,10 @@ export const deleteGoal = createAsyncThunk(
   }
 )
 
-export const getGoals = createAsyncThunk('goals/getAll', async (_, thunkAPI) => {
+export const getTimesheets = createAsyncThunk('timesheets/getAll', async (_, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.user.token
-    return await goalService.getGoals(token)
+    return await timesheetService.getTimesheets(token)
   } catch (error) {
     const message = (
       error.response &&
@@ -62,8 +62,8 @@ export const getGoals = createAsyncThunk('goals/getAll', async (_, thunkAPI) => 
 )
 
 
-export const goalSlice = createSlice({
-  name: 'goals',
+export const timesheetSlice = createSlice({
+  name: 'timesheets',
   initialState,
   reducers: {
     reset: (state) => initialState
@@ -74,7 +74,7 @@ export const goalSlice = createSlice({
         state.isLoading = true
       })
       .addCase(createGoal.fulfilled, (state, action) => {
-        state.goals.push(action.payload)
+        state.timesheets.push(action.payload)
         state.isSuccess = true
         state.isLoading = false
       })
@@ -83,15 +83,15 @@ export const goalSlice = createSlice({
         state.isLoading = false
         state.message = action.payload
       })
-      .addCase(getGoals.pending, (state) => {
+      .addCase(getTimesheets.pending, (state) => {
         state.isLoading = true
       })
-      .addCase(getGoals.fulfilled, (state, action) => {
-        state.goals = action.payload
+      .addCase(getTimesheets.fulfilled, (state, action) => {
+        state.timesheets = action.payload
         state.isSuccess = true
         state.isLoading = false
       })
-      .addCase(getGoals.rejected, (state, action) => {
+      .addCase(getTimesheets.rejected, (state, action) => {
         state.message = action.payload
         state.isError = true
         state.isLoading = false
@@ -100,7 +100,7 @@ export const goalSlice = createSlice({
         state.isLoading = true
       })
       .addCase(deleteGoal.fulfilled, (state, action) => {
-        state.goals = state.goals.filter((goal) => goal._id !== action.payload.id)
+        state.timesheets = state.timesheets.filter((timesheet) => timesheet._id !== action.payload.id)
         state.isSuccess = true
         state.isLoading = false
       })
@@ -112,5 +112,5 @@ export const goalSlice = createSlice({
   }
 })
 
-export const { reset } = goalSlice.actions
-export default goalSlice.reducer
+export const { reset } = timesheetSlice.actions
+export default timesheetSlice.reducer
